@@ -110,9 +110,11 @@ namespace XamCore.Security {
 
 			using (var copy = NSMutableDictionary.FromDictionary (query.queryDict)){
 				SetLimit (copy, 1);
-				copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnData);
-				if (wantPersistentReference)
+				if (wantPersistentReference) {
 					copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnPersistentRef);
+				} else {
+					copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnData);
+				}
 				
 				IntPtr ptr;
 				status = SecItem.SecItemCopyMatching (copy.Handle, out ptr);
@@ -129,9 +131,11 @@ namespace XamCore.Security {
 
 			using (var copy = NSMutableDictionary.FromDictionary (query.queryDict)){
 				var n = SetLimit (copy, max);
-				copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnData);
-				if (wantPersistentReference)
+				if (wantPersistentReference) {
 					copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnPersistentRef);
+				} else {
+					copy.LowlevelSetObject (CFBoolean.True.Handle, SecItem.ReturnData);
+				}
 
 				IntPtr ptr;
 				status = SecItem.SecItemCopyMatching (copy.Handle, out ptr);
